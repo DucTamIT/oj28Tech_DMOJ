@@ -106,17 +106,7 @@
             const data = parseProblem();
             console.log('28Tech Extension: Parsed data', data);
 
-            // 1. Inject JSON for Generic Parser
-            const existingJson = document.getElementById('competitive-companion-data');
-            if (existingJson) existingJson.remove();
-
-            const container = document.createElement('div');
-            container.id = 'competitive-companion-data';
-            container.style.display = 'none';
-            container.textContent = JSON.stringify(data);
-            document.body.appendChild(container);
-
-            // 2. Inject DMOJ-compatible HTML for DMOJ Parser (if active)
+            // Inject DMOJ-compatible HTML for DMOJ Parser
             // DMOJ parser looks for h4 with "Sample Input" and "Sample Output"
             const existingDmoj = document.getElementById('dmoj-compatible-data');
             if (existingDmoj) existingDmoj.remove();
@@ -124,6 +114,20 @@
             const dmojContainer = document.createElement('div');
             dmojContainer.id = 'dmoj-compatible-data';
             dmojContainer.style.display = 'none';
+
+            // Inject Title for DMOJ Parser
+            // The parser looks for .problem-title h2 and splits by " - "
+            // We inject a fake structure at the top and replace " - " with " – " (en dash) to prevent splitting
+            const titleWrapper = document.createElement('div');
+            titleWrapper.className = 'problem-title';
+            titleWrapper.style.display = 'none';
+
+            const dmojTitle = document.createElement('h2');
+            // Replace " - " with " – " (en dash) to bypass the parser's split regex
+            dmojTitle.textContent = data.name.replace(/ - /g, ' – ');
+
+            titleWrapper.appendChild(dmojTitle);
+            dmojContainer.appendChild(titleWrapper);
 
             data.tests.forEach((test, index) => {
                 const num = index + 1;
@@ -149,9 +153,10 @@
                 dmojContainer.appendChild(outputPre);
             });
 
-            document.body.appendChild(dmojContainer);
+            // Prepend to body to ensure it's found first
+            document.body.prepend(dmojContainer);
 
-            console.log('28Tech Extension: Data injected (JSON and DMOJ-compatible HTML)');
+            console.log('28Tech Extension: Data injected (DMOJ-compatible HTML)');
         } catch (e) {
             console.error('28Tech Extension: Error parsing/injecting data', e);
         }
