@@ -22,8 +22,8 @@ Extension này hỗ trợ tích hợp trang web `oj.28tech.com.vn` với **Compe
 Vì extension này chưa có trên Store, bạn cần cài đặt thủ công (Developer Mode):
 *(Since this extension is not on the Store yet, you need to install it manually (Developer Mode):)*
 
-1.  Tải hoặc Clone thư mục `28Tech_ext` về máy.
-    *(Download or Clone the `28Tech_ext` folder to your computer.)*
+1.  Tải extension về dưới dạng file ZIP và giải nén.
+    *(Download the extension as a ZIP file and extract it.)*
 2.  Mở trình duyệt Chrome/Edge, truy cập `chrome://extensions/`.
     *(Open Chrome/Edge browser, go to `chrome://extensions/`.)*
 3.  Bật chế độ **Developer mode** (góc trên bên phải).
@@ -55,4 +55,3 @@ Vì extension này chưa có trên Store, bạn cần cài đặt thủ công (D
     *(In **Custom rules**, add the following:)*
     - **Regex**: `^https://oj\.28tech\.com\.vn/problem/.*`
     - **Parser**: `DMOJProblemParser`
-
